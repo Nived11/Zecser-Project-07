@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { DialogFooter } from "../../../../components/ui/dialog";
 import { Button } from "../../../../components/ui/button";
 import { Input } from "../../../../components/ui/input";
@@ -31,6 +31,16 @@ const EditNewsForm = ({ news, onSave }: Props) => {
     setCroppedAreaPixels(areaPixels);
   }, []);
 
+  useEffect(() => {
+  if (news) {
+    setTitle(news.title);
+    setDescription(news.description);
+  } else {
+    setTitle("");
+    setDescription("");
+  }
+}, [news]);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (selected) {
@@ -44,7 +54,7 @@ const EditNewsForm = ({ news, onSave }: Props) => {
 
   const handleSubmit = async () => {
     try {
-      let finalImageUrl = news?.image_url;
+      let finalImageUrl = news?.image;
       let croppedFile: File | undefined;
 
       if (cropImage && croppedAreaPixels) {
@@ -102,15 +112,15 @@ const EditNewsForm = ({ news, onSave }: Props) => {
             />
           </div>
         ) : (
-          news?.image_url && (
-            <div className="aspect-[4/3]">
-              <img
-              src={news?.image_url}
-              alt="preview"
-              className="w-full h-full object-cover"
-            />
-            </div>
-          )
+         news?.image && (
+  <div className="aspect-[4/3]">
+    <img
+      src={news.image}
+      alt="preview"
+      className="w-full h-full object-cover"
+    />
+  </div>
+)
         )}
         {cropImage && (
           <div className="pt-2">

@@ -1,7 +1,6 @@
-import Spinner from "../../components/common/Spinner";
-import Footer from "../../components/Footer";
 import EventsCard from "./components/EventsCard";
 import { useFetchEvents } from "./hooks/useFetchEvents";
+import EventsSkeleton from "./components/EventsSkeleton";
 
 const EventsPage = () => {
   const { data, loading } = useFetchEvents();
@@ -14,9 +13,10 @@ const EventsPage = () => {
         <h1 className="text-2xl font-bold">EVENTS</h1>
       </div>
 
+      
       <div className="max-w-6xl mx-auto px-4 py-8 min-h-[300px]">
         {loading ? (
-          <Spinner />
+          <EventsSkeleton />
         ) : hasNews ? (
           <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
             {data.map((item) => (
@@ -27,8 +27,7 @@ const EventsPage = () => {
           <p className="text-center text-gray-500">No new events.</p>
         )}
       </div>
-
-      <Footer />
+     
     </div>
   );
 };
