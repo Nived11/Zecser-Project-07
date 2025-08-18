@@ -11,6 +11,8 @@ export const useFetchEvents = () => {
     try {
 
       const res = await api.get("/events/"); 
+      // console.log("events data:", res.data.results);
+      
       setData(res.data.results); 
     } catch (err: any) {
       setError(err.messag || "server not responding");
