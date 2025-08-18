@@ -1,0 +1,20 @@
+export { default as Home } from "./Home";
+export { default as Learning } from "./Learning";
+export { default as NotFound } from "./NotFound";
+export { default as StudentLogin } from "./StudentLogin";
+export { default as WeProvide } from "./WeProvide";
+export { default as SportsPage } from "./sportsPage";
+export { default as ApplicationFormPage } from "./ApplicationFormPage";
+export { default as ApplicationPreviewPage } from "./ApplicationPreviewPage";
+export { default as ApplicationReviewPage } from "./ApplicationReviewpage";
+export { default as CareerPage } from "./CareerPage";
+export { default as JobDetailPage } from "./JobDetailPage";
+export { default as FacultyPage } from "./FacultyPage";
+export { default as AboutUs } from "./AboutUs";
+export { default as News } from "./News";
+export { default as Events } from "./Events";
+export { default as EventsDetails } from "./EventsDetails";
+export { default as NewsDetails } from "./NewsDetails";
+export { default as UserHome } from "./UserHome";
+export { default as ContactUs } from "./ContactUs";
+

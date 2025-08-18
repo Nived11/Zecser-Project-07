@@ -1,0 +1,15 @@
+export { default as News } from './News'
+export { default as ResetPassword } from './ResetPassword'
+export { default as SubAdminLogin } from './SubAdminLogin'
+export { default as AdminFacultyPage } from './FacultyPage'
+export { default as ManageLearningVideos } from './ManageLearningVideos'
+export { default as UploadedVideosListPage } from './UploadedVideosList'
+export { default as AdminHome } from './AdminHome'
+export { default as EventsManagement } from './EventsManagement'
+export { default as StudentManagement } from './StudentManagement'
+export { default as AddvaccancyPage } from "./AddvaccancyPage";
+export { default as ApplicantslistsPage } from "./ApplicantslistsPage";
+export { default as ApplicantlistPage } from "./ApplicantlistPage";
+export { default as EditVaccancyPage } from "./EditVaccancyPage";
+export { default as CareerDetailPage } from "./CareerDetailPage";
+export { default as CareerListPage } from "./CareerListPage.tsx";

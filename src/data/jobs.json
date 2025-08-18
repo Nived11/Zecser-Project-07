@@ -1,0 +1,251 @@
+
+[
+  {
+    "id": 1,
+    "title": "Front Desk Executive",
+    "location": "Kochi, Kerala",
+    "experience": "1+ years",
+    "description": "Manage front desk operations, greet visitors, and handle calls professionally.",
+    "requirements": [
+      "Excellent communication skills",
+      "Proficient in MS Office",
+      "Pleasant personality",
+      "Customer service experience"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Admission Officer",
+    "location": "Kochi, Kerala",
+    "experience": "2+ years",
+    "description": "Handle the entire admission process, communicate with prospective students and parents.",
+    "requirements": [
+      "Strong interpersonal skills",
+      "Knowledge of school admission process",
+      "Fluency in English and Malayalam",
+      "Experience with CRM tools is a plus"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Computer Science Teacher",
+    "location": "Kochi, Kerala",
+    "experience": "3+ years teaching experience",
+    "description": "Teach computer science syllabus for middle and high school students.",
+    "requirements": [
+      "B.Ed. and a degree in Computer Science",
+      "Hands-on knowledge of programming languages",
+      "Familiarity with online teaching tools",
+      "Classroom management skills"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Exam Coordinator",
+    "location": "Kochi, Kerala",
+    "experience": "2+ years in academic coordination",
+    "description": "Plan, schedule and manage internal and board exams efficiently.",
+    "requirements": [
+      "Strong organizational skills",
+      "Familiar with CBSE/ICSE exam protocols",
+      "Coordination with faculty and administration",
+      "Proficiency in Excel/Google Sheets"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Mathematics Teacher (LP)",
+    "location": "Kochi, Kerala",
+    "experience": "1+ years teaching experience",
+    "description": "Teach foundational mathematics to Lower Primary (LP) students.",
+    "requirements": [
+      "B.Ed. and a degree in Mathematics",
+      "Flair for teaching young learners",
+      "Creative and engaging teaching methods",
+      "Patience and empathy"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Physics Teacher (HS)",
+    "location": "Kochi, Kerala",
+    "experience": "5+ years teaching Physics",
+    "description": "Teach Physics for Higher Secondary (HS) level with conceptual clarity.",
+    "requirements": [
+      "M.Sc. in Physics with B.Ed.",
+      "Experience with lab sessions and experiments",
+      "Strong subject expertise",
+      "Board exam preparation skills"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Chemistry Teacher",
+    "location": "Kochi, Kerala",
+    "experience": "5+ years teaching Chemistry",
+    "description": "Teach Chemistry to high school students with a focus on concept clarity and practical understanding.",
+    "requirements": [
+      "M.Sc. in Chemistry with B.Ed.",
+      "Experience conducting lab experiments",
+      "Strong theoretical and practical knowledge",
+      "Fluent communication skills"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "English Teacher",
+    "location": "Kochi, Kerala",
+    "experience": "4+ years teaching English",
+    "description": "Teach English literature and grammar with innovative methods and student interaction.",
+    "requirements": [
+      "M.A. in English with B.Ed.",
+      "Excellent written and verbal communication",
+      "Creative teaching methodologies",
+      "Familiarity with literature and language lab tools"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Biology Teacher",
+    "location": "Kochi, Kerala",
+    "experience": "3+ years teaching Biology",
+    "description": "Teach Biology to secondary school students with focus on diagrams and practical knowledge.",
+    "requirements": [
+      "M.Sc. in Biology/Zoology/Botany with B.Ed.",
+      "Comfortable with dissection and lab work",
+      "Digital content delivery skills",
+      "Passionate about life sciences"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Librarian",
+    "location": "Kochi, Kerala",
+    "experience": "2+ years in library management",
+    "description": "Manage school library resources and help students develop reading habits.",
+    "requirements": [
+      "Bachelor's/Master's in Library Science",
+      "Organizational and cataloging skills",
+      "Knowledge of digital library systems",
+      "Friendly and approachable attitude"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Admission Officer",
+    "location": "Kochi, Kerala",
+    "experience": "3+ years in school admissions",
+    "description": "Handle student admissions, inquiries, and maintain accurate records.",
+    "requirements": [
+      "Bachelor's degree in any discipline",
+      "Excellent communication and interpersonal skills",
+      "Experience with CRM or admission tools",
+      "Organized and detail-oriented"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Computer Science Teacher",
+    "location": "Kochi, Kerala",
+    "experience": "4+ years teaching CS",
+    "description": "Teach programming, algorithms, and basic computer skills to students.",
+    "requirements": [
+      "B.Tech/B.Sc. in CS or IT with B.Ed.",
+      "Knowledge of programming languages (Python, C++)",
+      "Project-based learning experience",
+      "Experience with coding platforms"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Watchman",
+    "location": "Kochi, Kerala",
+    "experience": "2+ years in security",
+    "description": "Ensure safety and security of the school premises during and after school hours.",
+    "requirements": [
+      "Physically fit with good alertness",
+      "Experience in school or institution security",
+      "Basic record keeping",
+      "Trustworthy and responsible"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Care Taker",
+    "location": "Kochi, Kerala",
+    "experience": "2+ years in caretaking roles",
+    "description": "Responsible for cleanliness, student assistance, and classroom support.",
+    "requirements": [
+      "Basic education",
+      "Experience working with children",
+      "Compassionate and disciplined",
+      "Ability to handle emergency situations"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Physics Teacher (UP)",
+    "location": "Kochi, Kerala",
+    "experience": "3+ years teaching Physics",
+    "description": "Teach Physics to Upper Primary students using engaging experiments and real-life examples.",
+    "requirements": [
+      "B.Sc./M.Sc. in Physics with B.Ed.",
+      "Strong conceptual understanding",
+      "Ability to simplify complex concepts",
+      "Experience with activity-based learning"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Bus Driver",
+    "location": "Kochi, Kerala",
+    "experience": "5+ years driving school buses",
+    "description": "Safely transport students on designated routes and ensure on-time pick-up/drop-off.",
+    "requirements": [
+      "Valid Heavy Vehicle Driving License",
+      "Knowledge of local routes",
+      "Good discipline and patience",
+      "No accident history preferred"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Social Science Teacher",
+    "location": "Kochi, Kerala",
+    "experience": "4+ years teaching History, Civics & Geography",
+    "description": "Teach Social Studies subjects with interactive discussions and map-based activities.",
+    "requirements": [
+      "M.A. in History/Political Science/Geography with B.Ed.",
+      "Passion for humanities",
+      "Experience with classroom projects",
+      "Good command of general knowledge"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Lab Assistant",
+    "location": "Kochi, Kerala",
+    "experience": "2+ years in a science lab",
+    "description": "Assist teachers in setting up experiments, maintaining lab equipment and materials.",
+    "requirements": [
+      "Diploma or Degree in Science",
+      "Hands-on experience with lab tools",
+      "Organized and safety-conscious",
+      "Basic knowledge of chemicals and equipment"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Malayalam Teacher (HS)",
+    "location": "Kochi, Kerala",
+    "experience": "5+ years teaching Malayalam",
+    "description": "Teach Malayalam language and literature to Higher Secondary students with fluency.",
+    "requirements": [
+      "M.A. in Malayalam with B.Ed.",
+      "Strong linguistic skills",
+      "Experience preparing students for board exams",
+      "Deep understanding of regional literature"
+    ]
+  }
+]
+
