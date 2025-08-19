@@ -1,70 +1,74 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import type { NewsItem } from "../../../types/news";
+import api from "../../../lib/api";
 
-const useDummyData = true; // toggle to false when using real API
+export interface NewsType {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+}
 
 export const useFetchNews = () => {
-  const [data, setData] = useState<NewsItem[]>([]);
+  const [allNews, setAllNews] = useState<NewsType[]>([]);
+  const [data, setData] = useState<NewsType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [error, setError] = useState<string | null>(null);
+
+  const PAGE_SIZE = 9; 
+
+  const fetchAllNews = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      let allResults: NewsType[] = [];
+      let nextUrl: string | null = "/news/";
+
+      while (nextUrl) {
+        const res: any = await api.get(nextUrl);
+
+        const newsData: NewsType[] = res.data.results.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          image: item.image,
+          description: item.content,
+        }));
+
+        allResults = [...allResults, ...newsData];
+        nextUrl = res.data.next; 
+      }
+
+      setAllNews(allResults);
+      setTotalPages(Math.ceil(allResults.length / PAGE_SIZE));
+    } catch (err: any) {
+      setError(err.message || "Server not responding");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (useDummyData) {
-      const dummyNews: NewsItem[] = [
-        {
-          id: 1,
-          title: "School Achievements",
-          description:
-            "Every milestone counts. We proudly showcase the remarkable accomplishments of our students and faculty.",
-          imageUrl: "/schoolachievements.jpg",
-          category: "achievement",
-        },
-        {
-          id: 2,
-          title: "Upcoming Events",
-          description:
-            "Our school calendar is always buzzing with exciting upcoming events that foster creativity and engagement.",
-          imageUrl: "/upcomingevents.jpg",
-          category: "event",
-        },
-        {
-          id: 3,
-          title: "Past Events Highlights",
-          description:
-            "Here’s what dazzled in past events—cultural nights, science exhibitions, and inter-school competitions.",
-          imageUrl: "/download.png",
-          category: "highlight",
-        },
-        {
-          id: 4,
-          title: "Inter-School Debate Championship",
-          description:
-            "Our debate team secured 1st place in the inter-school championship, showcasing logic and articulation.",
-          imageUrl: "/debate.jpg",
-          category: "achievement",
-        },
-        {
-          id: 5,
-          title: "Art & Culture Fest Preview",
-          description:
-            "Upcoming art fest will bring together painters, musicians, and dancers in a celebration of talent.",
-          imageUrl: "/arts.jpg",
-          category: "event",
-        },
-      ];
-
-      setTimeout(() => {
-        setData(dummyNews);
-        setLoading(false);
-      }, 500);
-    } else {
-      axios.get("/api/news").then((res) => {
-        const result = Array.isArray(res.data) ? res.data : res.data.data;
-        setData(result);
-        setLoading(false);
-      });
-    }
+    fetchAllNews();
   }, []);
 
-  return { data, loading };
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    const paginated = allNews.slice(startIndex, startIndex + PAGE_SIZE);
+    setData(paginated);
+  }, [currentPage, allNews]);
+
+  return {
+    data,
+    loading,
+    error,
+    totalPages,
+    currentPage,
+    nextPage: () => setCurrentPage((p) => Math.min(p + 1, totalPages)),
+    prevPage: () => setCurrentPage((p) => Math.max(p - 1, 1)),
+    hasNextPage: currentPage < totalPages,
+    hasPrevPage: currentPage > 1,
+    setPage: setCurrentPage,
+  };
 };

@@ -5,13 +5,7 @@ import NewsCard from "./NewsCard";
 import NewsCardSkeleton from "./NewsCardSkeleton";
 import PaginationButtons from "./PaginationButton";
 import EditNewsForm from "./EditNewsForm";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  
-} from "../../../../components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle,} from "../../../../components/ui/dialog";
 import DeleteNewsDialog from "./DeleteNewsDialog";
 import { useDeleteNews } from "../hooks/useDeleteNews";
 import { Button } from "../../../../components/ui/button";
@@ -31,7 +25,7 @@ const NewLists = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const currentNews =
-  typeof editId === "number" ? data.find((item) => item.id === editId) : null;
+    typeof editId === "number" ? data.find((item) => item.id === editId) : null;
 
   const handleEditSave = async () => {
     setEditId(null);
@@ -39,7 +33,7 @@ const NewLists = () => {
   };
 
   const handleDeleteConfirm = async () => {
-   if (!deleteId) return;
+    if (!deleteId) return;
     await deleteNews(deleteId);
     setDeleteId(null);
     console.log("ref");
@@ -56,7 +50,7 @@ const NewLists = () => {
   }
 
   return (
-    
+
     <section className="max-w-5xl mx-auto px-4 py-4 space-y-6">
       <Button onClick={() => setEditId(true)} className="text-white">
         Add News
@@ -81,17 +75,17 @@ const NewLists = () => {
 
       <PaginationButtons {...paginationProps} />
 
-        <Dialog open={!!editId} onOpenChange={() => setEditId(null)}>
-  <DialogContent className="max-h-[90vh] overflow-y-auto no-scrollbar">
-    <DialogHeader>
-      <DialogTitle>
-        {editId === true ? "Add News" : "Edit News"}
-      </DialogTitle>
-    </DialogHeader>
+      <Dialog open={!!editId} onOpenChange={() => setEditId(null)}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto no-scrollbar">
+          <DialogHeader>
+            <DialogTitle>
+              {editId === true ? "Add News" : "Edit News"}
+            </DialogTitle>
+          </DialogHeader>
 
-    <EditNewsForm news={currentNews ?? null} onSave={handleEditSave} />
-  </DialogContent>
-</Dialog>
+          <EditNewsForm news={currentNews ?? null} onSave={handleEditSave} />
+        </DialogContent>
+      </Dialog>
 
 
       <DeleteNewsDialog

@@ -22,4 +22,4 @@ const newsSlice = createSlice({
 });
 
 export const { setNews } = newsSlice.actions;
-export default newsSlice.reducer; // ✅ This is the reducer
+export default newsSlice.reducer; 

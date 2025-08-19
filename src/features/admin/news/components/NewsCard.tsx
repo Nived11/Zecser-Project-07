@@ -7,7 +7,7 @@ interface Props {
   onDelete?: (id: number) => void;
 }
 
-const NewsCard = ({ news, onEdit, onDelete }: Props) => {
+const  NewsCard = ({ news, onEdit, onDelete }: Props) => {
   return (
     <div className="flex items-start gap-5 bg-white border border-gray-200 rounded-lg shadow-sm p-4">
       <img
@@ -30,14 +30,12 @@ const NewsCard = ({ news, onEdit, onDelete }: Props) => {
         <div className="mt-2 flex gap-2">
           <button
             className="px-3 py-1.5 text-sm font-medium rounded bg-blue-600 text-white hover:bg-blue-700"
-            onClick={() => onEdit?.(news.id)}
-          >
+            onClick={() => onEdit?.(news.id)}>
             Edit
           </button>
           <button
             className="px-3 py-1.5 text-sm font-medium rounded bg-red-600 text-white hover:bg-red-700"
-            onClick={() => onDelete?.(news.id)}
-          >
+            onClick={() => onDelete?.(news.id)}>
             Delete
           </button>
         </div>

@@ -15,7 +15,7 @@ export const useDeleteNews = () => {
        toast.success(res.data.message || "News deleted successfully.");
     
     } catch (err) {
-    //   console.error(err);
+      console.error(err);
 
       setError("Failed to delete news.");
     } finally {

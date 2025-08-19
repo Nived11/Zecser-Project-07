@@ -1,11 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogTitle,
-} from "../../../../components/ui/alert-dialog";
+import { AlertDialog,AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogCancel, AlertDialogTitle,} from "../../../../components/ui/alert-dialog";
 import { Button } from "../../../../components/ui/button";
 
 interface Props {
@@ -37,8 +30,7 @@ const DeleteNewsDialog = ({
           <Button
             className="text-white"
             disabled={isLoading}
-            onClick={onConfirm}
-          >
+            onClick={onConfirm} >
             {isLoading ? "Deleting..." : "Delete"}
           </Button>
         </AlertDialogFooter>

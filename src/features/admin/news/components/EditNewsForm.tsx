@@ -32,14 +32,14 @@ const EditNewsForm = ({ news, onSave }: Props) => {
   }, []);
 
   useEffect(() => {
-  if (news) {
-    setTitle(news.title);
-    setDescription(news.description);
-  } else {
-    setTitle("");
-    setDescription("");
-  }
-}, [news]);
+    if (news) {
+      setTitle(news.title);
+      setDescription(news.description);
+    } else {
+      setTitle("");
+      setDescription("");
+    }
+  }, [news]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
@@ -112,15 +112,15 @@ const EditNewsForm = ({ news, onSave }: Props) => {
             />
           </div>
         ) : (
-         news?.image && (
-  <div className="aspect-[4/3]">
-    <img
-      src={news.image}
-      alt="preview"
-      className="w-full h-full object-cover"
-    />
-  </div>
-)
+          news?.image && (
+            <div className="aspect-[4/3]">
+              <img
+                src={news.image}
+                alt="preview"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )
         )}
         {cropImage && (
           <div className="pt-2">
