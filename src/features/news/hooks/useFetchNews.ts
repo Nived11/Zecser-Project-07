@@ -9,55 +9,49 @@ export interface NewsType {
 }
 
 export const useFetchNews = () => {
-  const [allNews, setAllNews] = useState<NewsType[]>([]);
   const [data, setData] = useState<NewsType[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
+  const [pageSize, setPageSize] = useState<number>(0); 
 
-  const PAGE_SIZE = 9; 
-
-  const fetchAllNews = async () => {
+  const fetchNews = async (page: number) => {
     setLoading(true);
     setError(null);
 
     try {
-      let allResults: NewsType[] = [];
-      let nextUrl: string | null = "/news/";
+      const res = await api.get(`/news/?page=${page}`);
 
-      while (nextUrl) {
-        const res: any = await api.get(nextUrl);
+      const newsData: NewsType[] = res.data.results.map((item: any) => ({
+        id: item.id,
+        title: item.title,
+        image: item.image,
+        description: item.content,
+      }));
+      setData(newsData);
 
-        const newsData: NewsType[] = res.data.results.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          image: item.image,
-          description: item.content,
-        }));
-
-        allResults = [...allResults, ...newsData];
-        nextUrl = res.data.next; 
+      if (pageSize === 0 && res.data.results.length > 0) {
+        setPageSize(res.data.results.length);
       }
 
-      setAllNews(allResults);
-      setTotalPages(Math.ceil(allResults.length / PAGE_SIZE));
+      if (pageSize > 0) {
+        setTotalPages(Math.ceil(res.data.count / pageSize));
+      }
     } catch (err: any) {
-      setError(err.message || "Server not responding");
+      if (err.response?.status === 404 && page > 1) {
+        setCurrentPage((prev) => Math.max(prev - 1, 1));
+      } else {
+        setError(err.message || "Server not responding");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchAllNews();
-  }, []);
-
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * PAGE_SIZE;
-    const paginated = allNews.slice(startIndex, startIndex + PAGE_SIZE);
-    setData(paginated);
-  }, [currentPage, allNews]);
+    fetchNews(currentPage);
+  }, [currentPage, pageSize]); 
 
   return {
     data,

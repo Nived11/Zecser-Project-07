@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
 import api from "../../../../lib/api";
 
 export interface NewsType {
@@ -13,23 +12,19 @@ export interface NewsType {
 
 export const useNews = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [allNews, setAllNews] = useState<NewsType[]>([]);
+  
   const [data, setData] = useState<NewsType[]>([]);
   const [error, setError] = useState<string>("");
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const PAGE_SIZE = 6;
+  const [pageSize, setPageSize] = useState<number>(0); 
 
-  const fetchAllNews = async () => {
+
+  const fetchAllNews = async (page:number) => {
     setIsLoading(true);
     setError("");
     try {
-      let allResults: NewsType[] = [];
-      let nextUrl: string | null = "/news/"; 
-
-      
-      while (nextUrl) {
-        const res: any = await api.get(nextUrl);
+      const res = await api.get(`/news/?page=${page}`);
 
         const newsData: NewsType[] = res.data.results.map((item: any) => ({
           id: item.id,
@@ -39,20 +34,20 @@ export const useNews = () => {
           createdAt: new Date(item.published_at),
           updatedAt: new Date(item.published_at),
         }));
+        setData(newsData);
+    
 
-        allResults = [...allResults, ...newsData];
-        nextUrl = res.data.next; 
+       if (pageSize === 0 && res.data.results.length > 0) {
+        setPageSize(res.data.results.length);
       }
-
-      setAllNews(allResults);
-      setTotalPages(Math.ceil(allResults.length / PAGE_SIZE));
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        setError(err?.response?.data?.message || "Failed to load news. Please try again.");
-      } else if (err instanceof Error) {
-        setError(err.message);
+     if (pageSize > 0) {
+        setTotalPages(Math.ceil(res.data.count / pageSize));
+      }
+    } catch (err: any) {
+      if (err.response?.status === 404 && page > 1) {
+        setCurrentPage((prev) => Math.max(prev - 1, 1));
       } else {
-        setError("Failed to load news. Please try again.");
+        setError(err.message || "Server not responding");
       }
     } finally {
       setIsLoading(false);
@@ -60,15 +55,9 @@ export const useNews = () => {
   };
 
   useEffect(() => {
-    fetchAllNews();
-  }, []);
+    fetchAllNews(currentPage);
+  }, [currentPage, pageSize]); 
 
-
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * PAGE_SIZE;
-    const paginated = allNews.slice(startIndex, startIndex + PAGE_SIZE);
-    setData(paginated);
-  }, [currentPage, allNews]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
