@@ -1,8 +1,7 @@
 export interface Career {
-  id: string;
+  id: string | number ;
   title: string;
-  department: "Teaching" | "Administration";
-  location: string;
+  department: "string";
   jobType: string;
   applyBy: string;
   subject?: string;

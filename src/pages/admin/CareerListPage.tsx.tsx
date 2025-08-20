@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CareerCard,
   FilterBar,
@@ -12,6 +13,7 @@ const CareerListPage = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   const statusOptions = ["All", "Open", "Closed"];
 
@@ -51,16 +53,26 @@ const CareerListPage = () => {
           className="px-4 py-2 w-full md:w-1/3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
 
-        <FilterBar
-          selected={statusFilter}
-          onChange={(val) => {
-            setStatusFilter(val);
-            setCurrentPage(1);
-          }}
-          options={statusOptions}
-          label="Status"
-        />
+        <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+          <FilterBar
+            selected={statusFilter}
+            onChange={(val) => {
+              setStatusFilter(val);
+              setCurrentPage(1);
+            }}
+            options={statusOptions}
+            label="Status"
+          />
+
+          <button
+            onClick={() => navigate("/admin/add-vaccancy")}
+            className="px-4 py-2 text-sm bg-gray-700 rounded-full text-white hover:bg-gray-800 whitespace-nowrap"
+          >
+            + Add Jobs
+          </button>
+        </div>
       </div>
+
 
       {paginatedCareers.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
@@ -89,11 +101,10 @@ const CareerListPage = () => {
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              className={`px-4 py-1 rounded text-sm font-medium ${
-                currentPage === page
+              className={`px-4 py-1 rounded text-sm font-medium ${currentPage === page
                   ? "bg-gray-800 text-white"
                   : "bg-gray-200 hover:bg-gray-300"
-              }`}
+                }`}
               aria-label={`Go to page ${page}`}
             >
               {page}

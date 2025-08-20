@@ -1,91 +1,59 @@
 import { useEffect, useState } from "react";
 import type { Career } from "../types";
+import api from "../../../../lib/api";
+
+const formatDate = (dateStr: string) => {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "short" }); 
+  const year = date.getFullYear();
+
+  const suffix =
+    day % 10 === 1 && day !== 11
+      ? "st"
+      : day % 10 === 2 && day !== 12
+      ? "nd"
+      : day % 10 === 3 && day !== 13
+      ? "rd"
+      : "th";
+
+  return `${day}${suffix} ${month} ${year}`;
+};
 
 export const useCareers = () => {
   const [careers, setCareers] = useState<Career[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Simulate API delay
-    const timer = setTimeout(() => {
-      setCareers([
-        {
-          id: "1",
-          title: "Lower Primary Class Teacher",
-          department: "Teaching",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "15th Aug 2025",
-        },
-        {
-          id: "2",
-          title: "Front Desk Administrator",
-          department: "Administration",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "18th Aug 2025",
-        },
-        {
-          id: "3",
-          title: "High School Science Teacher",
-          department: "Teaching",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "20th Aug 2025",
-        },
-        {
-          id: "4",
-          title: "Lower Primary Class Teacher",
-          department: "Teaching",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "15th Aug 2025",
-        },
-        {
-          id: "5",
-          title: "Front Desk Administrator",
-          department: "Administration",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "18th Aug 2025",
-        },
-        {
-          id: "6",
-          title: "High School Science Teacher",
-          department: "Teaching",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "20th Aug 2025",
-        },
-        {
-          id: "7",
-          title: "Lower Primary Class Teacher",
-          department: "Teaching",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "15th Aug 2025",
-        },
-        {
-          id: "8",
-          title: "Front Desk Administrator",
-          department: "Administration",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "18th Aug 2025",
-        },
-        {
-          id: "9",
-          title: "High School Science Teacher",
-          department: "Teaching",
-          location: "Main Campus, Kochi",
-          jobType: "Full-Time",
-          applyBy: "20th Aug 2025",
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000); // simulate network delay
+  const fetchCareers = async () => {
+    setIsLoading(true);
+    try {
+      const res = await api.get("/jobs/");
+      console.log(res.data.results);
 
-    return () => clearTimeout(timer);
+      const data: Career[] = res.data.results.map((item: any) => ({
+        id: item.id,
+        title: item.title,
+        department: item.department,
+        jobType: item.job_type,
+        applyBy: formatDate(item.last_date), 
+        subject: item.subject,
+        vacancies: item.vacancies,
+        qualification: item.qualification,
+      }));
+
+      setCareers(data);
+      console.log("Fetched careers:", data);
+    } catch (error) {
+      console.error("Error fetching careers:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCareers();
   }, []);
 
   return { careers, isLoading };

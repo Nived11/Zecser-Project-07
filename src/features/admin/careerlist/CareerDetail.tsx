@@ -7,7 +7,7 @@ const CareerDetail = () => {
   const { careers, isLoading } = useCareers();
   const navigate = useNavigate();
 
-  const career = careers.find((c) => c.id === id);
+  const career = careers.find((c) => c.id === Number(id));
 
   // Show skeleton loader while data is loading
   if (isLoading) {
@@ -61,8 +61,8 @@ const CareerDetail = () => {
             <span className="text-gray-700">{career.jobType}</span>
           </div>
           <div>
-            <strong className="text-gray-800">Location:</strong>{" "}
-            <span className="text-gray-700">{career.location}</span>
+            <strong className="text-gray-800">Vacancies:</strong>{" "}
+            <span className="text-gray-700">{career.vacancies || "Not specified"}</span>
           </div>
           <div>
             <strong className="text-gray-800">Apply By:</strong>{" "}

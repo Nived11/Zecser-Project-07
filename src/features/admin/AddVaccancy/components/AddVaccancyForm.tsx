@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import type { VaccancyFormData } from "../types";
-import { useAddVaccancy } from "../hooks/useVaccancy";
+import { useVaccancy } from "../hooks/useVaccancy";
+import { Toaster } from "react-hot-toast";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type AddVaccancyFormProps = {
   initialData?: VaccancyFormData;
   onSubmit?: (data: VaccancyFormData) => Promise<void>;
   isEditMode?: boolean;
+  loading?: boolean;   
+  error?: string | null; 
 };
 
 export default function AddVaccancyForm({
   initialData,
-  onSubmit,
   isEditMode = false,
+  onSubmit,
+  loading: parentLoading,
+  error: parentError,
+  
 }: AddVaccancyFormProps) {
   const [formData, setFormData] = useState<VaccancyFormData>({
     title: "",
@@ -24,7 +32,12 @@ export default function AddVaccancyForm({
     deadline: "",
   });
 
-  const { addVaccancy, loading, error } = useAddVaccancy();
+   const { addVaccancy, loading: addLoading, error: addError } = useVaccancy();
+   const navigate = useNavigate();
+   
+
+  const effectiveLoading = isEditMode ? parentLoading : addLoading;
+  const effectiveError = isEditMode ? parentError : addError;
 
   useEffect(() => {
     if (initialData) {
@@ -49,26 +62,35 @@ export default function AddVaccancyForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (onSubmit) {
-      await onSubmit(formData);
-    } else {
-      await addVaccancy(formData);
-    }
+       if (isEditMode && onSubmit) {
+    await onSubmit(formData);  
+  } else {
+    await addVaccancy(formData); 
+  }
   };
 
+  
+
   return (
+    <>
+    <Toaster />
     <div className="max-w-4xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">
+        <button type="button"  onClick={() => navigate(-1)} className="flex items-center  mb-4">
+          <ArrowLeft className="w-5 h-5 text-gray-600 hover:text-gray-800" />
+          <span className="ml-2 text-sm text-gray-600 hover:text-gray-800">Back</span>
+        </button>
         {isEditMode ? "Edit Job Vacancy" : "Add New Job Vacancy"}
       </h2>
 
-      {error && (
+      {effectiveError && (
         <div className="mb-4 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-          {error}
+          {effectiveError}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium mb-1">Job Title</label>
@@ -186,19 +208,20 @@ export default function AddVaccancyForm({
         <div className="pt-4">
           <button
             type="submit"
-            className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 disabled:bg-blue-300"
-            disabled={loading}
+            className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 disabled:bg-gray-300"
+            disabled={effectiveLoading}
           >
-            {loading
-              ? isEditMode
-                ? "Saving..."
-                : "Posting..."
-              : isEditMode
-              ? "Save Changes"
-              : "Post Job"}
+            {effectiveLoading
+                ? isEditMode
+                  ? "Saving..."
+                  : "Posting..."
+                : isEditMode
+                ? "Save Changes"
+                : "Post Job"}
           </button>
         </div>
       </form>
     </div>
+    </>
   );
 }

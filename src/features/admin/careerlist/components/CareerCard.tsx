@@ -1,7 +1,7 @@
 import type { Career } from "../types";
 import { Link } from "react-router-dom";
 
-const CareerCard = ({ id, title, department, location, jobType, applyBy }: Career) => {
+const CareerCard = ({ id, title, department, jobType, applyBy }: Career) => {
   return (
     <div className="rounded-lg shadow overflow-hidden border border-gray-200">
       {/* Header */}
@@ -13,7 +13,7 @@ const CareerCard = ({ id, title, department, location, jobType, applyBy }: Caree
         <h3 className="text-md font-bold text-gray-800">{title}</h3>
         <p className="text-sm text-gray-600">Department: {department}</p>
         <p className="text-sm">Job Type: {jobType}</p>
-        <p className="text-sm">Location: {location}</p>
+        <p className="text-sm"></p>
         <p className="text-sm text-gray-500">Apply by: {applyBy}</p>
 
         {/* Buttons: View Applicants & View More */}
