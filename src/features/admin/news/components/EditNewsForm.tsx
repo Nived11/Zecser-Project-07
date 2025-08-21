@@ -71,6 +71,7 @@ const EditNewsForm = ({ news, onSave }: Props) => {
 
       if (news) {
         await updateNews(news.id, payload);
+       
         onSave();
       } else {
         const created = await createNews(payload);

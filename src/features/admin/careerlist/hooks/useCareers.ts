@@ -29,8 +29,7 @@ export const useCareers = (page = 1, search = "", status = "All") => {
     setIsLoading(true);
     const fetchCareers = async () => {
       try {
-        const response = await api.get(
-          `/jobs/?page=${page}&search=${search}&status=${
+        const response = await api.get( `/jobs/?page=${page}&search=${search}&status=${
             status !== "All" ? status : ""
           }`
         );

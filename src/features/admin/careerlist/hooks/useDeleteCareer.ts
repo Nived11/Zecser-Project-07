@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../../../../lib/api";
+import toast from "react-hot-toast";
 
 export const useDeleteCareer = () => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -11,11 +12,14 @@ export const useDeleteCareer = () => {
 
     try {
       await api.delete(`/jobs/${id}/`);
-        console.log(`Career with id ${id} deleted successfully.`);
       return true; 
     } catch (err: any) {
-      setError("Failed to delete job");
-      console.error("Delete career error:", err);
+      if (err instanceof Error) {
+        setError(err.message);
+        toast.error( "Failed to delete career. Please try again.");
+      } else {
+        setError("Failed to delete career. Please try again.");
+      }
       return false; 
     } finally {
       setIsDeleting(false);

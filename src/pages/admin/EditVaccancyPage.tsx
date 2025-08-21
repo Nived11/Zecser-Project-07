@@ -38,8 +38,13 @@ export default function EditVaccancyPage() {
     try {
       await updateVaccancy(id!, data);
     } catch (err) {
-      console.error("Update failed:", err);
-      alert("Failed to update job vacancy.");
+     if (err instanceof Error) {
+        console.error( err.message);
+      }
+      else {
+        console.error("Error updating vacancy");
+      }
+      throw err;
     }
   };
   if (error) {

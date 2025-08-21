@@ -11,7 +11,7 @@ const ErrorMessage = ({
   onRetry,
 }: ErrorMessageProps) => {
   return (
-    <Alert variant="destructive">
+    <Alert variant="destructive" >
       <FaExclamationTriangle className="h-4 w-4" />
       <AlertTitle>Error</AlertTitle>
       <AlertDescription className="flex flex-col gap-2">

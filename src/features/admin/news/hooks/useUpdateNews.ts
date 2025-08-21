@@ -65,15 +65,21 @@ export const useUpdateNews = () => {
       if (data.file) formData.append("image", data.file);
 
       const res = await api.put(`/news/${id}/`, formData);
-
       toast.success(res.data.message || "News Updated successfully.");
+      
       return {
         ...res.data,
         description: res.data.content, 
         image: res.data.image || res.data.image_url,
       } as NewsType;
     } catch (err) {
-      setError("Failed to update news.");
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+      else {
+        setError("Failed to update news.");
+        console.error("Update error:", err);
+      }
     } finally {
       setIsUpdating(false);
     }

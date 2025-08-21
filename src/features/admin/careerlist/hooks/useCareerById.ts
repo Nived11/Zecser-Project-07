@@ -1,4 +1,3 @@
-// features/admin/careerlist/hooks/useCareerById.ts
 import { useEffect, useState } from "react";
 import api from "../../../../lib/api";
 import type { Career } from "../types";
@@ -47,7 +46,11 @@ export const useCareerById = (id?: string) => {
 
         setCareer(mappedCareer);
       } catch (err) {
-        setError("Career not found");
+        if (err instanceof Error) {
+          setError(err.message);
+        }else {
+          setError("career not found");
+        }
       } finally {
         setIsLoading(false);
       }

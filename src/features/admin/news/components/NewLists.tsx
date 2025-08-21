@@ -16,6 +16,7 @@ const NewLists = () => {
     isLoading,
     error: newsError,
     refetch,
+    currentPage,
     ...paginationProps
   } = useNews();
 
@@ -29,7 +30,7 @@ const NewLists = () => {
 
   const handleEditSave = async () => {
     setEditId(null);
-    refetch;
+    refetch(currentPage);
   };
 
   const handleDeleteConfirm = async () => {
@@ -37,14 +38,14 @@ const NewLists = () => {
     await deleteNews(deleteId);
     setDeleteId(null);
     console.log("ref");
-    refetch;
+    refetch(currentPage);
   };
 
   if (newsError) {
-    return (
-      <ErrorMessage
+    return ( 
+      <ErrorMessage 
         message="Failed to load news. Please try again."
-        // onRetry={refetch}
+        onRetry={() => refetch(currentPage)}
       />
     );
   }
@@ -76,7 +77,7 @@ const NewLists = () => {
         )}
       </div>
 
-      <PaginationButtons {...paginationProps} />
+      <PaginationButtons currentPage={0} {...paginationProps} />
 
       <Dialog open={!!editId} onOpenChange={() => setEditId(null)}>
         <DialogContent className="max-h-[90vh] overflow-y-auto no-scrollbar">

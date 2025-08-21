@@ -19,10 +19,10 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     <div className="fixed inset-0 flex items-center justify-center 
       bg-white-500 bg-opacity-100 backdrop-blur-md z-50">
       <div
-  className="bg-white border border-gray-200 shadow-2xl rounded-xl 
+        className="bg-white border border-gray-200 shadow-2xl rounded-xl 
              p-6 w-96 transform transition-all duration-300 scale-100
              animate-[popUp_0.3s_ease-out]"
->
+      >
         <h2 className="text-lg font-semibold text-gray-800">
           Confirm Delete
         </h2>

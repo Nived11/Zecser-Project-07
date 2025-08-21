@@ -30,8 +30,7 @@ export const useVaccancy = () => {
     setError(null);
     try {
       const fd = buildFormData(formData);
-      const res = await api.post("/jobs/", fd);
-      console.log("Vacancy added:", res.data);
+      const res = await api.post("/jobs/", fd)
       toast.success(res.data.message || "Job vacancy added ");
       
       return res.data;
@@ -53,8 +52,7 @@ export const useVaccancy = () => {
     setError(null);
     try {
       const fd = buildFormData(formData);
-      const res = await api.patch(`/jobs/${id}/`, fd,);
-      console.log("Vacancy updated:", res.data);
+      const res = await api.patch(`/jobs/${id}/`, fd,)
       toast.success(res.data.message || "Job vacancy updated");
       return res.data;
       
