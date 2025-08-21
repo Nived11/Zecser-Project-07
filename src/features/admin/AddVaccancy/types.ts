@@ -6,10 +6,10 @@ export interface Vaccancy {
   jobType: string;           
   vacancies: number;
   qualification: string;
-  descriptionUrl: string | null; 
+  descriptionUrl: string ; 
   deadline: string;           
   createdAt: string;          
-  isActive: boolean;        
+  status: boolean;        
 }
 
 export interface VaccancyFormData {
@@ -18,7 +18,8 @@ export interface VaccancyFormData {
   subject: string;
   jobType: string;
   vacancies: string;         
-  qualification: string;
-  description: File | null;  
-  deadline: string;          
+ qualification: string[];
+  description: string ;  
+  deadline: string;  
+  status: "active" | "inactive";        
 }

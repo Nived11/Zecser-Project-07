@@ -16,11 +16,10 @@ export const useVaccancy = () => {
     fd.append("subject", formData.subject);
     fd.append("job_type", formData.jobType); 
     fd.append("vacancies", String(formData.vacancies));
-    fd.append("qualification", formData.qualification);
+    fd.append("qualification", formData.qualification.join(", "));
     fd.append("last_date", formData.deadline); 
-    if (formData.description) {
-      fd.append("job_description_pdf", formData.description); 
-    }
+    fd.append("job_description", formData.description as string || "");
+    fd.append("is_active", formData.status === "active" ? "true" : "false");
 
     return fd;
   };
@@ -36,8 +35,12 @@ export const useVaccancy = () => {
       toast.success(res.data.message || "Job vacancy added ");
       
       return res.data;
+      
     } catch (e) {
-      setError("Failed to post vacancy. Please try again.");
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+      toast.error("Failed to add vacancy. Please try again.");
       throw e;
     } finally {
       setLoading(false);
@@ -56,7 +59,10 @@ export const useVaccancy = () => {
       return res.data;
       
     } catch (e) {
-      setError("Failed to update vacancy. Please try again.");
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+      toast.error("Failed to update vacancy. Please try again.");
       throw e;
     } finally {
       setLoading(false);

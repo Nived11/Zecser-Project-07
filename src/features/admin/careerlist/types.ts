@@ -1,10 +1,11 @@
 export interface Career {
-  id: string | number ;
+  id: number;
   title: string;
-  department: "string";
-  jobType: string;
-  applyBy: string;
+  department: string;
   subject?: string;
+  jobType: string;
   vacancies?: string;
-  qualification?: string
+  qualification?: string;
+  description?: string;
+  applyBy: string;
 }

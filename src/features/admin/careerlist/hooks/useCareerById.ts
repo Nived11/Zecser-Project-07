@@ -1,6 +1,7 @@
+// features/admin/careerlist/hooks/useCareerById.ts
 import { useEffect, useState } from "react";
-import type { Career } from "../types";
 import api from "../../../../lib/api";
+import type { Career } from "../types";
 
 const formatDate = (dateStr: string) => {
   if (!dateStr) return "";
@@ -19,23 +20,20 @@ const formatDate = (dateStr: string) => {
   return `${day}${suffix} ${month} ${year}`;
 };
 
-export const useCareers = (page = 1, search = "", status = "All") => {
-  const [careers, setCareers] = useState<Career[]>([]);
+export const useCareerById = (id?: string) => {
+  const [career, setCareer] = useState<Career | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [nextPage, setNextPage] = useState<string | null>(null);
-  const [prevPage, setPrevPage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    const fetchCareers = async () => {
-      try {
-        const response = await api.get(
-          `/jobs/?page=${page}&search=${search}&status=${
-            status !== "All" ? status : ""
-          }`
-        );
+    if (!id) return;
 
-         const formattedResults: Career[] = response.data.results.map((formData: any) => ({
+    const fetchCareer = async () => {
+      try {
+        setIsLoading(true);
+        const res = await api.get(`/jobs/${id}/`);
+        const formData = res.data;
+        const mappedCareer: Career = {
           id: formData.id,
           title: formData.title,
           department: formData.department,
@@ -45,25 +43,18 @@ export const useCareers = (page = 1, search = "", status = "All") => {
           qualification: formData.qualification,
           description: formData.job_description,
           applyBy: formatDate(formData.last_date),
-        }));
+        };
 
-        setCareers(formattedResults);
-        setNextPage(response.data.next);
-        setPrevPage(response.data.previous);
+        setCareer(mappedCareer);
       } catch (err) {
-        if (err instanceof Error) {
-          console.error(err.message);
-        }else {
-          console.error("Error fetching careers:");
-        }
-        setCareers([]);
+        setError("Career not found");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchCareers();
-  }, [page, search, status]);
+    fetchCareer();
+  }, [id]);
 
-  return { careers, isLoading, nextPage, prevPage };
+  return { career, isLoading, error };
 };

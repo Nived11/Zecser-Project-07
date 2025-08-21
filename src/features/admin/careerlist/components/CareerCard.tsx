@@ -9,15 +9,31 @@ const CareerCard = ({ id, title, department, jobType, applyBy }: Career) => {
         <h4 className="text-gray-800 font-semibold text-sm">{title}</h4>
       </div>
 
-      <div className="bg-white p-5 space-y-2">
-        <h3 className="text-md font-bold text-gray-800">{title}</h3>
-        <p className="text-sm text-gray-600">Department: {department}</p>
-        <p className="text-sm">Job Type: {jobType}</p>
-        <p className="text-sm"></p>
-        <p className="text-sm text-gray-500">Apply by: {applyBy}</p>
+      <div className="bg-white p-5 space-y-3">
+        {/* Job Title */}
+        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+
+        {/* Details with centered colon */}
+        <div className="text-sm text-gray-700 space-y-1">
+          <div className="grid grid-cols-[120px_10px_1fr]">
+            <span className="font-medium text-gray-800">Department</span>
+            <span className="text-center">:</span>
+            <span>{department}</span>
+          </div>
+          <div className="grid grid-cols-[120px_10px_1fr]">
+            <span className="font-medium text-gray-800">Job Type</span>
+            <span className="text-center">:</span>
+            <span>{jobType}</span>
+          </div>
+          <div className="grid grid-cols-[120px_10px_1fr]">
+            <span className="font-medium text-gray-800">Apply By</span>
+            <span className="text-center">:</span>
+            <span className="text-gray-600">{applyBy}</span>
+          </div>
+        </div>
 
         {/* Buttons: View Applicants & View More */}
-        <div className="flex justify-between items-center pt-2">
+        <div className="flex justify-between items-center pt-3">
           <Link to="/admin/applicants">
             <button className="px-3 py-1 bg-gray-600 text-white text-sm rounded shadow hover:bg-gray-800">
               View Applicants

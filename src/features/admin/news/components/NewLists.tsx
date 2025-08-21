@@ -29,7 +29,7 @@ const NewLists = () => {
 
   const handleEditSave = async () => {
     setEditId(null);
-    refetch();
+    refetch;
   };
 
   const handleDeleteConfirm = async () => {
@@ -37,14 +37,14 @@ const NewLists = () => {
     await deleteNews(deleteId);
     setDeleteId(null);
     console.log("ref");
-    refetch();
+    refetch;
   };
 
   if (newsError) {
     return (
       <ErrorMessage
         message="Failed to load news. Please try again."
-        onRetry={refetch}
+        // onRetry={refetch}
       />
     );
   }
@@ -70,6 +70,9 @@ const NewLists = () => {
           ))
         ) : (
           <p className="text-center mt-6 text-gray-600">No news found.</p>
+        )}
+        {newsError && (
+          <p>Failed to load news. Please try again.</p>
         )}
       </div>
 

@@ -1,15 +1,32 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useCareers } from "./hooks/useCareers";
 import { FaUserCircle } from "react-icons/fa";
+import { ArrowLeft, Pencil, Trash2 } from "lucide-react"; 
+import { useCareerById } from "./hooks/useCareerById";
+import { useState } from "react";
+import ConfirmDeleteModal from "./components/ConfirmDeleteModal";
+import { useDeleteCareer } from "./hooks/useDeleteCareer";
+import toast, { Toaster } from "react-hot-toast";
 
 const CareerDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { careers, isLoading } = useCareers();
+  const { career, isLoading, error } = useCareerById(id);
+  const { deleteCareer, isDeleting } = useDeleteCareer();
   const navigate = useNavigate();
+   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const career = careers.find((c) => c.id === Number(id));
+const handleConfirmDelete = async () => {
+    if (!career?.id) return;
+    const success = await deleteCareer(career.id);
 
-  // Show skeleton loader while data is loading
+    if (success) {
+      toast.success("Career deleted successfully");
+      setShowDeleteModal(false);
+      setTimeout(() => {
+        navigate("/admin/career");
+      }, 1500);
+      
+    }
+  };
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto my-10 animate-pulse space-y-4">
@@ -22,13 +39,26 @@ const CareerDetail = () => {
     );
   }
 
-  // Show error after loading completes
   if (!career) {
     return <p className="text-red-500 text-center mt-10">Career not found.</p>;
   }
+  if (error) {
+    return <p className="text-red-500 text-center mt-10">{error}</p>;
+  }
 
   return (
+    <>
+    <Toaster/>
     <div className="max-w-4xl mx-auto my-10">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center text-gray-600 hover:text-gray-800 mb-4 font-bold"
+      >
+        <ArrowLeft className="w-5 h-5 text-gray-600 hover:text-gray-800" />
+        <span className="ml-2 text-sm text-gray-600 hover:text-gray-800">Back</span>
+      </button>
+
       <div className="bg-white shadow-md rounded-md overflow-hidden">
         {/* Header */}
         <div className="bg-gray-300 flex items-center justify-between p-4">
@@ -38,34 +68,57 @@ const CareerDetail = () => {
             </div>
             <span className="font-medium text-gray-700">{career.title}</span>
           </div>
-          <button
-            className="text-sm text-blue-600 font-medium hover:underline"
-            onClick={() => navigate(`/admin/edit-vaccancy/${career.id}`)}
-          >
-            Edit
-          </button>
+
+          {/* Actions: Edit + Delete */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate(`/admin/edit-vaccancy/${career.id}`)}
+              className="p-2 rounded-full hover:bg-gray-200"
+              title="Edit"
+            >
+              <Pencil className="w-5 h-5 text-blue-600" />
+            </button>
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              disabled={isDeleting}
+              className="p-2 rounded-full hover:bg-gray-200"
+              title="Delete"
+            >
+              <Trash2 className="w-5 h-5 text-red-600" />
+            </button>
+          </div>
         </div>
 
         {/* Job Info */}
+                {/* Job Info */}
         <div className="p-5 space-y-2">
-          <div>
-            <strong className="text-gray-800">Job Title:</strong>{" "}
+          <div className="grid grid-cols-[140px_10px_1fr] text-sm">
+            <span className="font-medium text-gray-800">Job Title</span>
+            <span className="text-center">:</span>
             <span className="text-gray-700">{career.title}</span>
           </div>
-          <div>
-            <strong className="text-gray-800">Department:</strong>{" "}
+
+          <div className="grid grid-cols-[140px_10px_1fr] text-sm">
+            <span className="font-medium text-gray-800">Department</span>
+            <span className="text-center">:</span>
             <span className="text-gray-700">{career.department}</span>
           </div>
-          <div>
-            <strong className="text-gray-800">Job Type:</strong>{" "}
+
+          <div className="grid grid-cols-[140px_10px_1fr] text-sm">
+            <span className="font-medium text-gray-800">Job Type</span>
+            <span className="text-center">:</span>
             <span className="text-gray-700">{career.jobType}</span>
           </div>
-          <div>
-            <strong className="text-gray-800">Vacancies:</strong>{" "}
+
+          <div className="grid grid-cols-[140px_10px_1fr] text-sm">
+            <span className="font-medium text-gray-800">Vacancies</span>
+            <span className="text-center">:</span>
             <span className="text-gray-700">{career.vacancies || "Not specified"}</span>
           </div>
-          <div>
-            <strong className="text-gray-800">Apply By:</strong>{" "}
+
+          <div className="grid grid-cols-[140px_10px_1fr] text-sm">
+            <span className="font-medium text-gray-800">Apply By</span>
+            <span className="text-center">:</span>
             <span className="text-gray-700">{career.applyBy}</span>
           </div>
         </div>
@@ -75,25 +128,30 @@ const CareerDetail = () => {
           <div>
             <h4 className="text-md font-semibold text-gray-800 mb-1">Job Description</h4>
             <p className="text-sm text-gray-700 leading-relaxed">
-              We are seeking an enthusiastic {career.title} to nurture the academic and emotional growth of
-              children in Grades 1–3. The ideal candidate will foster curiosity and build foundational skills
-              through creative, age-appropriate teaching methods.
+              {career.description || "Not specified"}
             </p>
           </div>
 
           <div>
             <h4 className="text-md font-semibold text-gray-800 mb-1">Qualification Required</h4>
             <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-              <li>Bachelor’s Degree + B.Ed / D.El.Ed / TTC (Mandatory)</li>
-              <li>1+ year of teaching experience preferred</li>
-              <li>Strong classroom management skills</li>
-              <li>Good command of spoken and written English</li>
-              <li>Passionate about early education and child development</li>
+              {career.qualification
+                ? career.qualification.split(", ").map((q: any, idx: any) => (
+                    <li key={idx}>{q}</li>
+                  ))
+                : <li className="text-gray-500">Not specified</li>}
             </ul>
           </div>
         </div>
       </div>
+       <ConfirmDeleteModal
+        isOpen={showDeleteModal}
+        isDeleting={isDeleting}
+        onCancel={() => setShowDeleteModal(false)}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
+    </>
   );
 };
 
