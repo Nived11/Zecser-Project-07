@@ -27,24 +27,28 @@ export const useCareers = (page = 1, search = "", status = "All") => {
 
   useEffect(() => {
     setIsLoading(true);
+
     const fetchCareers = async () => {
       try {
-        const response = await api.get( `/jobs/?page=${page}&search=${search}&status=${
-            status !== "All" ? status : ""
-          }`
-        );
+        let url = `/jobs/?page=${page}&search=${search}`;
+        if (status === "Open") url += `&is_active=true`;
+        if (status === "Closed") url += `&is_active=false`;
 
-         const formattedResults: Career[] = response.data.results.map((formData: any) => ({
-          id: formData.id,
-          title: formData.title,
-          department: formData.department,
-          subject: formData.subject,
-          jobType: formData.job_type,
-          vacancies: String(formData.vacancies),
-          qualification: formData.qualification,
-          description: formData.job_description,
-          applyBy: formatDate(formData.last_date),
-        }));
+        const response = await api.get(url);
+
+        const formattedResults: Career[] = response.data.results.map(
+          (formData: any) => ({
+            id: formData.id,
+            title: formData.title,
+            department: formData.department,
+            subject: formData.subject,
+            jobType: formData.job_type,
+            vacancies: String(formData.vacancies),
+            qualification: formData.qualification,
+            description: formData.job_description,
+            applyBy: formatDate(formData.last_date),
+          })
+        );
 
         setCareers(formattedResults);
         setNextPage(response.data.next);
@@ -52,8 +56,8 @@ export const useCareers = (page = 1, search = "", status = "All") => {
       } catch (err) {
         if (err instanceof Error) {
           console.error(err.message);
-        }else {
-          console.error("Error fetching careers:");
+        } else {
+          console.error("Error fetching careers");
         }
         setCareers([]);
       } finally {

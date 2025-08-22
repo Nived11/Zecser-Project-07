@@ -50,7 +50,7 @@ const handleConfirmDelete = async () => {
     <>
     <Toaster/>
     <div className="max-w-4xl mx-auto my-10">
-      {/* Back Button */}
+
       <button
         onClick={() => navigate(-1)}
         className="flex items-center text-gray-600 hover:text-gray-800 mb-4 font-bold"
@@ -60,7 +60,7 @@ const handleConfirmDelete = async () => {
       </button>
 
       <div className="bg-white shadow-md rounded-md overflow-hidden">
-        {/* Header */}
+
         <div className="bg-gray-300 flex items-center justify-between p-4">
           <div className="flex items-center gap-3">
             <div className="bg-blue-800 text-white rounded-full p-2 text-xl">
@@ -69,7 +69,6 @@ const handleConfirmDelete = async () => {
             <span className="font-medium text-gray-700">{career.title}</span>
           </div>
 
-          {/* Actions: Edit + Delete */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate(`/admin/edit-vaccancy/${career.id}`)}
@@ -89,8 +88,7 @@ const handleConfirmDelete = async () => {
           </div>
         </div>
 
-        {/* Job Info */}
-                {/* Job Info */}
+
         <div className="p-5 space-y-2">
           <div className="grid grid-cols-[140px_10px_1fr] text-sm">
             <span className="font-medium text-gray-800">Job Title</span>
@@ -123,7 +121,6 @@ const handleConfirmDelete = async () => {
           </div>
         </div>
 
-        {/* Job Description */}
         <div className="bg-white border-t p-5 space-y-4">
           <div>
             <h4 className="text-md font-semibold text-gray-800 mb-1">Job Description</h4>

@@ -62,9 +62,22 @@ export default function AddVaccancyForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (isEditMode && onSubmit) {
       await onSubmit(formData);
-      navigate(-1);
+       formData.title = "";
+      formData.department = "";
+      formData.subject = "";
+      formData.jobType = "";
+      formData.vacancies = "";  
+      formData.qualification = [];
+      formData.deadline = "";
+      formData.description = "";
+      formData.status = "active";
+       setTimeout(() => {
+        navigate(-1);
+      }, 1500);
+     
     } else {
       await addVaccancy(formData);
       formData.title = "";
@@ -133,7 +146,7 @@ export default function AddVaccancyForm({
                 value={formData.department}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
-                placeholder="Editor/Department"
+                placeholder="Enter Department"
                 required
               />
             </div>
