@@ -39,13 +39,13 @@ const handleConfirmDelete = async () => {
     );
   }
 
-  if (!career) {
-    return <p className="text-red-500 text-center mt-10">Career not found.</p>;
-  }
-  if (error) {
-    return <p className="text-red-500 text-center mt-10">{error}</p>;
-  }
-
+  if (!career || error) {
+  return (
+    <p className="text-red-500 text-center mt-10">
+      {error || "Career not found."}
+    </p>
+  );
+}
   return (
     <>
     <Toaster/>

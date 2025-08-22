@@ -68,6 +68,7 @@ const CareerListPage = () => {
           />
           <button
             onClick={() => navigate("/admin/add-vaccancy")}
+            title="Add New Job vaccancy"
             className="px-4 py-2 text-sm bg-gray-700 rounded-full text-white hover:bg-gray-800 whitespace-nowrap"
           >
             + Add Jobs

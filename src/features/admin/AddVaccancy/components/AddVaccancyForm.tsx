@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import type { VaccancyFormData } from "../types";
 import { useVaccancy } from "../hooks/useVaccancy";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { FiTrash2 } from "react-icons/fi";
@@ -64,14 +64,16 @@ export default function AddVaccancyForm({
     e.preventDefault();
 
     if (isEditMode && onSubmit) {
+      window.scrollTo(0, 0); 
       await onSubmit(formData); 
+      toast.success("Job vacancy updated successfully");
     } else {
       await addVaccancy(formData);
     }
 
     setTimeout(() => {
       navigate(-1);
-    });
+    }, 1500);
   };
 
   return (

@@ -15,7 +15,6 @@ export const useCareerById = (id?: string) => {
         setIsLoading(true);
         const res = await api.get(`/jobs/${id}/`);
         const formData = res.data;
-        console.log("Fetc:", formData);
         const mappedCareer: Career = {
           id: formData.id,
           title: formData.title,

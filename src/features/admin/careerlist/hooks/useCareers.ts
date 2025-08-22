@@ -19,7 +19,6 @@ export const useCareers = (page = 1, search = "", status = "All") => {
         if (status === "Closed") url += `&is_active=false`;
 
         const response = await api.get(url);
-        console.log("Fetched Careers:", response.data.results);
 
         const formattedResults: Career[] = response.data.results.map(
           (formData: any) => ({
