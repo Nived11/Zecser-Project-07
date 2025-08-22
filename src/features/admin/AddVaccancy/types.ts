@@ -18,7 +18,7 @@ export interface VaccancyFormData {
   subject: string;
   jobType: string;
   vacancies: string;         
-  qualification: string[];
+ qualification: string[];
   description: string ;  
   deadline: string;  
   status: "active" | "inactive";        

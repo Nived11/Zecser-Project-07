@@ -1,21 +1,26 @@
 import { formateDate } from "../../../../utils/helpers/formate";
 import type { NewsType } from "../hooks/useNews";
+import fallbackImage from "../../../../assets/noimage.jpg"
 
 interface Props {
   news: NewsType;
   onEdit?: (id: number) => void;
   onDelete?: (id: number) => void;
+      
 }
 
 const  NewsCard = ({ news, onEdit, onDelete }: Props) => {
   return (
     <div className="flex items-start gap-5 bg-white border border-gray-200 rounded-lg shadow-sm p-4">
-      <img
-        src={news.image}
+       <img
+        src={news.image || fallbackImage}
         alt={news.title}
         loading="lazy"
         decoding="async"
         className="w-32 h-32 object-cover rounded border"
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).src = fallbackImage;
+        }}
       />
       <div className="flex-1 space-y-1">
         <div className="flex flex-col sm:flex-row sm:justify-between">

@@ -38,7 +38,7 @@ export default function AddVaccancyForm({
 
   const effectiveLoading = isEditMode ? parentLoading : addLoading;
   const effectiveError = isEditMode ? parentError : addError;
-  
+
   useEffect(() => {
     if (formData.qualification.length === 0) {
       setFormData((prev) => ({ ...prev, qualification: [""] }));
@@ -62,37 +62,16 @@ export default function AddVaccancyForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isEditMode && onSubmit) {
-      await onSubmit(formData);
-       formData.title = "";
-      formData.department = "";
-      formData.subject = "";
-      formData.jobType = "";
-      formData.vacancies = "";  
-      formData.qualification = [];
-      formData.deadline = "";
-      formData.description = "";
-      formData.status = "active";
-       setTimeout(() => {
-        navigate(-1);
-      }, 1500);
-     
+      await onSubmit(formData); 
     } else {
       await addVaccancy(formData);
-      formData.title = "";
-      formData.department = "";
-      formData.subject = "";
-      formData.jobType = "";
-      formData.vacancies = "";  
-      formData.qualification = [];
-      formData.deadline = "";
-      formData.description = "";
-      formData.status = "active";
-      setTimeout(() => {
-        navigate(-1);
-      }, 1500);
     }
+
+    setTimeout(() => {
+      navigate(-1);
+    });
   };
 
   return (
@@ -121,10 +100,9 @@ export default function AddVaccancyForm({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Job Title */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Job Title
-              </label>
+              <label className="block text-sm font-medium mb-1">Job Title</label>
               <input
                 type="text"
                 name="title"
@@ -136,10 +114,9 @@ export default function AddVaccancyForm({
               />
             </div>
 
+            {/* Department */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Department
-              </label>
+              <label className="block text-sm font-medium mb-1">Department</label>
               <input
                 type="text"
                 name="department"
@@ -151,6 +128,7 @@ export default function AddVaccancyForm({
               />
             </div>
 
+            {/* Subject */}
             <div>
               <label className="block text-sm font-medium mb-1">Subject</label>
               <input
@@ -164,6 +142,7 @@ export default function AddVaccancyForm({
               />
             </div>
 
+            {/* Job Type */}
             <div>
               <label className="block text-sm font-medium mb-1">Job Type</label>
               <input
@@ -177,6 +156,7 @@ export default function AddVaccancyForm({
               />
             </div>
 
+            {/* Vacancies */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Number of Vacancies
@@ -193,6 +173,7 @@ export default function AddVaccancyForm({
               />
             </div>
 
+            {/* Deadline */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Application Deadline
@@ -204,9 +185,10 @@ export default function AddVaccancyForm({
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
                 required
-                min={new Date().toISOString().split("T")[0]}
               />
             </div>
+
+            {/* Job Description */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium mb-1">
                 Job Description
@@ -221,6 +203,7 @@ export default function AddVaccancyForm({
               />
             </div>
 
+            {/* Qualification */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium mb-2">
                 Qualification
@@ -265,10 +248,9 @@ export default function AddVaccancyForm({
                 </div>
               ))}
 
-
               {formData.qualification.length > 0 &&
                 formData.qualification[formData.qualification.length - 1] !==
-                "" && (
+                  "" && (
                   <div className="flex justify-start mt-1">
                     <button
                       type="button"
@@ -287,6 +269,7 @@ export default function AddVaccancyForm({
                 )}
             </div>
 
+            {/* Status */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium mb-1">Status</label>
               <div className="flex items-center space-x-6 mt-1">
@@ -325,8 +308,8 @@ export default function AddVaccancyForm({
                   ? "Saving..."
                   : "Posting..."
                 : isEditMode
-                  ? "Save Changes"
-                  : "Post Job"}
+                ? "Save Changes"
+                : "Post Job"}
             </button>
           </div>
         </form>

@@ -12,6 +12,7 @@ export const useDeleteCareer = () => {
 
     try {
       await api.delete(`/jobs/${id}/`);
+      toast.success("deleted successfully.");
       return true; 
     } catch (err: any) {
       if (err instanceof Error) {

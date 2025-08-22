@@ -8,4 +8,5 @@ export interface Career {
   qualification?: string;
   description?: string;
   applyBy: string;
+  is_active: boolean;
 }

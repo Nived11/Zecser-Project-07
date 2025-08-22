@@ -1,4 +1,3 @@
-// components/VacancyFormSkeleton.tsx
 export default function VacancyFormSkeleton() {
   return (
     <div className="max-w-4xl mx-auto bg-white shadow rounded-xl p-6 animate-pulse space-y-6">

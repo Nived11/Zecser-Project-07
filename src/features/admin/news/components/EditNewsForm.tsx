@@ -9,6 +9,7 @@ import type { Area } from "react-easy-crop";
 import type { NewsType } from "../hooks/useNews";
 import getCroppedImg from "../utils/cropImage";
 import { useUpdateNews } from "../hooks/useUpdateNews";
+import fallbackImage from "../../../../assets/noimage.jpg"
 
 interface Props {
   news: NewsType | null;
@@ -119,6 +120,9 @@ const EditNewsForm = ({ news, onSave }: Props) => {
                 src={news.image}
                 alt="preview"
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = fallbackImage;
+                }}
               />
             </div>
           )

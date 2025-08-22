@@ -1,5 +1,6 @@
 import type { NewsType } from "../hooks/useFetchNews";
 import { useNavigate } from "react-router-dom";
+import fallbackImage from "../../../assets/noimage.jpg"
 
 interface Props {
   news: NewsType;
@@ -14,6 +15,9 @@ const NewsCard = ({ news }: Props) => {
       <img
         src={news.image}
         alt={news.title}
+        onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = fallbackImage;
+                }}
         className="w-full h-40 object-cover rounded"/>
       <h3 className="text-lg font-bold mt-2 truncate">{news.title}</h3>
       <p className="text-sm text-gray-600 mt-1 line-clamp-2">

@@ -5,12 +5,13 @@ import { useCareerById } from "./hooks/useCareerById";
 import { useState } from "react";
 import ConfirmDeleteModal from "./components/ConfirmDeleteModal";
 import { useDeleteCareer } from "./hooks/useDeleteCareer";
-import toast, { Toaster } from "react-hot-toast";
+import { formatDate } from "./utils/formatDate";
+import { Toaster } from "react-hot-toast";
 
 const CareerDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { career, isLoading, error } = useCareerById(id);
-  const { deleteCareer, isDeleting } = useDeleteCareer();
+  const { deleteCareer, isDeleting , error: deleteError} = useDeleteCareer();
   const navigate = useNavigate();
    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -19,9 +20,8 @@ const handleConfirmDelete = async () => {
     const success = await deleteCareer(career.id);
 
     if (success) {
-      toast.success("Career deleted successfully");
-      setShowDeleteModal(false);
       setTimeout(() => {
+        setShowDeleteModal(false);
         navigate("/admin/career");
       }, 1500);
       
@@ -117,7 +117,7 @@ const handleConfirmDelete = async () => {
           <div className="grid grid-cols-[140px_10px_1fr] text-sm">
             <span className="font-medium text-gray-800">Apply By</span>
             <span className="text-center">:</span>
-            <span className="text-gray-700">{career.applyBy}</span>
+            <span className="text-gray-700">{formatDate(career.applyBy)}</span>
           </div>
         </div>
 
@@ -145,7 +145,8 @@ const handleConfirmDelete = async () => {
         isOpen={showDeleteModal}
         isDeleting={isDeleting}
         onCancel={() => setShowDeleteModal(false)}
-        onConfirm={handleConfirmDelete}
+        onConfirm={handleConfirmDelete} 
+        error={deleteError}
       />
     </div>
     </>

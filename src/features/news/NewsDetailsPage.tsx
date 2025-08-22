@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetchNews } from "./hooks/useFetchNews";
 import NewsDetailSkeleton from "./components/NewsDetailSkeleton";
+import fallbackImage from "../../assets/noimage.jpg"
 
 const NewsDetailPage = () => {
   const { id } = useParams();
@@ -35,6 +36,9 @@ const NewsDetailPage = () => {
             src={news.image}
             className="w-full h-80 object-cover rounded-md"
             alt={news.title}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = fallbackImage;
+            }}
           />
           <h1 className="text-2xl font-bold mt-4 break-words">{news.title}</h1>
           <p className="text-gray-700 mt-2 whitespace-pre-line break-words">
@@ -56,6 +60,9 @@ const NewsDetailPage = () => {
                   src={item.image}
                   alt={item.title}
                   className="w-16 h-16 object-cover rounded"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = fallbackImage;
+                  }}
                 />
                 <div>
                   <h3 className="text-sm font-semibold line-clamp-2">{item.title}</h3>

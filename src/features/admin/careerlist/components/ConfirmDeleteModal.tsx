@@ -4,7 +4,8 @@ interface ConfirmDeleteModalProps {
   isOpen: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  isDeleting?: boolean; // 👈 new prop
+  isDeleting?: boolean; 
+  error?: string | null; 
 }
 
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
@@ -12,8 +13,11 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
   onCancel,
   onConfirm,
   isDeleting = false,
+
 }) => {
   if (!isOpen) return null;
+
+  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center 
@@ -23,6 +27,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
              p-6 w-96 transform transition-all duration-300 scale-100
              animate-[popUp_0.3s_ease-out]"
       >
+      
         <h2 className="text-lg font-semibold text-gray-800">
           Confirm Delete
         </h2>

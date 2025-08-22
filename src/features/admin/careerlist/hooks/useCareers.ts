@@ -1,23 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Career } from "../types";
 import api from "../../../../lib/api";
-
-const formatDate = (dateStr: string) => {
-  if (!dateStr) return "";
-  const date = new Date(dateStr);
-  const day = date.getDate();
-  const month = date.toLocaleString("en-US", { month: "short" });
-  const year = date.getFullYear();
-  const suffix =
-    day % 10 === 1 && day !== 11
-      ? "st"
-      : day % 10 === 2 && day !== 12
-      ? "nd"
-      : day % 10 === 3 && day !== 13
-      ? "rd"
-      : "th";
-  return `${day}${suffix} ${month} ${year}`;
-};
+import { formatDate } from "../utils/formatDate";
 
 export const useCareers = (page = 1, search = "", status = "All") => {
   const [careers, setCareers] = useState<Career[]>([]);
@@ -35,6 +19,7 @@ export const useCareers = (page = 1, search = "", status = "All") => {
         if (status === "Closed") url += `&is_active=false`;
 
         const response = await api.get(url);
+        console.log("Fetched Careers:", response.data.results);
 
         const formattedResults: Career[] = response.data.results.map(
           (formData: any) => ({
@@ -47,8 +32,11 @@ export const useCareers = (page = 1, search = "", status = "All") => {
             qualification: formData.qualification,
             description: formData.job_description,
             applyBy: formatDate(formData.last_date),
+            is_active: formData.is_active, 
           })
         );
+
+
 
         setCareers(formattedResults);
         setNextPage(response.data.next);

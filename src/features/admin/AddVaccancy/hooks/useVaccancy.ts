@@ -39,7 +39,7 @@ export const useVaccancy = () => {
       if (e instanceof Error) {
         setError(e.message);
       }
-      toast.error("Failed to add vacancy. Please try again.");
+      toast.error("Failed to add vacancy");
       throw e;
     } finally {
       setLoading(false);
@@ -60,7 +60,7 @@ export const useVaccancy = () => {
       if (e instanceof Error) {
         setError(e.message);
       }
-      toast.error("Failed to update vacancy. Please try again.");
+      toast.error("Failed to update vacancy");
       throw e;
     } finally {
       setLoading(false);

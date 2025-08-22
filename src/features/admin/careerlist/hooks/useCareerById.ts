@@ -2,23 +2,6 @@ import { useEffect, useState } from "react";
 import api from "../../../../lib/api";
 import type { Career } from "../types";
 
-const formatDate = (dateStr: string) => {
-  if (!dateStr) return "";
-  const date = new Date(dateStr);
-  const day = date.getDate();
-  const month = date.toLocaleString("en-US", { month: "short" });
-  const year = date.getFullYear();
-  const suffix =
-    day % 10 === 1 && day !== 11
-      ? "st"
-      : day % 10 === 2 && day !== 12
-      ? "nd"
-      : day % 10 === 3 && day !== 13
-      ? "rd"
-      : "th";
-  return `${day}${suffix} ${month} ${year}`;
-};
-
 export const useCareerById = (id?: string) => {
   const [career, setCareer] = useState<Career | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +15,7 @@ export const useCareerById = (id?: string) => {
         setIsLoading(true);
         const res = await api.get(`/jobs/${id}/`);
         const formData = res.data;
+        console.log("Fetc:", formData);
         const mappedCareer: Career = {
           id: formData.id,
           title: formData.title,
@@ -41,14 +25,15 @@ export const useCareerById = (id?: string) => {
           vacancies: String(formData.vacancies),
           qualification: formData.qualification,
           description: formData.job_description,
-          applyBy: formatDate(formData.last_date),
+          applyBy: formData.last_date, 
+          is_active: formData.is_active ,
         };
 
         setCareer(mappedCareer);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
-        }else {
+        } else {
           setError("career not found");
         }
       } finally {
