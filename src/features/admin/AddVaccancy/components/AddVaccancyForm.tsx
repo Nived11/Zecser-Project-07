@@ -176,6 +176,7 @@ export default function AddVaccancyForm({
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
                 required
+                min={new Date().toISOString().split("T")[0]}
               />
             </div>
 
@@ -189,6 +190,7 @@ export default function AddVaccancyForm({
                 value={formData.description}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
+                placeholder="Enter job description"
                 required={!isEditMode}
               />
             </div>
