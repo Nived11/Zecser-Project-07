@@ -6,7 +6,7 @@ import { useState } from "react";
 import ConfirmDeleteModal from "./components/ConfirmDeleteModal";
 import { useDeleteCareer } from "./hooks/useDeleteCareer";
 import { formatDate } from "./utils/formatDate";
-import { Toaster } from "react-hot-toast";
+import { AlertTriangle } from "lucide-react";
 
 const CareerDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,12 +21,13 @@ const handleConfirmDelete = async () => {
 
     if (success) {
       setTimeout(() => {
-        setShowDeleteModal(false);
         navigate("/admin/career");
+        setShowDeleteModal(false);
       }, 1500);
       
     }
   };
+  
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto my-10 animate-pulse space-y-4">
@@ -41,14 +42,18 @@ const handleConfirmDelete = async () => {
 
   if (!career || error) {
   return (
-    <p className="text-red-500 text-center mt-10">
+     <div className="flex flex-col items-center justify-center mt-10 max-w-4xl mx-auto my-28">
+    <div className="bg-red-100 p-4 rounded-full">
+      <AlertTriangle className="w-12 h-12 text-red-500" />
+    </div>
+    <p className="text-red-600 text-lg font-semibold mt-4">
       {error || "Career not found."}
     </p>
+  </div>
   );
 }
   return (
     <>
-    <Toaster/>
     <div className="max-w-4xl mx-auto my-10">
 
       <button

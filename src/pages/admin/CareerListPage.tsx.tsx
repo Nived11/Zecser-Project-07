@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import CareerCardSkeleton from "../../features/admin/careerlist/components/CareerCardSkeleton";
 import { CareerCard, FilterBar, useCareers } from "../../features/admin/careerlist";
+import { AlertTriangle } from "lucide-react";
 
 const CareerListPage = () => {
   const [statusFilter, setStatusFilter] = useState("All");
@@ -10,7 +11,7 @@ const CareerListPage = () => {
   const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { careers, isLoading, nextPage, prevPage } = useCareers(
+  const { careers, isLoading, nextPage, prevPage , isError} = useCareers(
     currentPage,
     debouncedSearch,
     statusFilter
@@ -37,7 +38,18 @@ const CareerListPage = () => {
     window.scrollTo(0, 0);
 
   };
-
+if (!careers || isError) {
+  return (
+     <div className="flex flex-col items-center justify-center mt-10 max-w-4xl mx-auto my-28">
+    <div className="bg-red-100 p-4 rounded-full">
+      <AlertTriangle className="w-12 h-12 text-red-500" />
+    </div>
+    <p className="text-red-600 text-lg font-semibold mt-4">
+      {isError || "Career not found."}
+    </p>
+  </div>
+  );
+}
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 px-6 py-10">
       <h1 className="text-2xl font-bold mb-6 text-center">New Job Vacancies</h1>
@@ -90,7 +102,7 @@ const CareerListPage = () => {
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-500 mt-12">No careers found</p>
+          <p className="text-center text-gray-500 mt-12">No Careers Found</p>
         )}
       </div>
 

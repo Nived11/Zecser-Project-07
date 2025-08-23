@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import type { VaccancyFormData } from "../types";
 import { useVaccancy } from "../hooks/useVaccancy";
-import toast, { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { FiTrash2 } from "react-icons/fi";
@@ -66,11 +66,9 @@ export default function AddVaccancyForm({
     if (isEditMode && onSubmit) {
       window.scrollTo(0, 0); 
       await onSubmit(formData); 
-      toast.success("Job vacancy updated successfully");
     } else {
       await addVaccancy(formData);
     }
-
     setTimeout(() => {
       navigate(-1);
     }, 1500);
@@ -102,7 +100,6 @@ export default function AddVaccancyForm({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Job Title */}
             <div>
               <label className="block text-sm font-medium mb-1">Job Title</label>
               <input
@@ -116,7 +113,6 @@ export default function AddVaccancyForm({
               />
             </div>
 
-            {/* Department */}
             <div>
               <label className="block text-sm font-medium mb-1">Department</label>
               <input
@@ -130,7 +126,6 @@ export default function AddVaccancyForm({
               />
             </div>
 
-            {/* Subject */}
             <div>
               <label className="block text-sm font-medium mb-1">Subject</label>
               <input
@@ -143,8 +138,6 @@ export default function AddVaccancyForm({
                 required
               />
             </div>
-
-            {/* Job Type */}
             <div>
               <label className="block text-sm font-medium mb-1">Job Type</label>
               <input
@@ -157,8 +150,6 @@ export default function AddVaccancyForm({
                 required
               />
             </div>
-
-            {/* Vacancies */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Number of Vacancies
@@ -175,7 +166,6 @@ export default function AddVaccancyForm({
               />
             </div>
 
-            {/* Deadline */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Application Deadline
@@ -190,7 +180,6 @@ export default function AddVaccancyForm({
               />
             </div>
 
-            {/* Job Description */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium mb-1">
                 Job Description
@@ -205,7 +194,6 @@ export default function AddVaccancyForm({
               />
             </div>
 
-            {/* Qualification */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium mb-2">
                 Qualification
@@ -271,7 +259,6 @@ export default function AddVaccancyForm({
                 )}
             </div>
 
-            {/* Status */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium mb-1">Status</label>
               <div className="flex items-center space-x-6 mt-1">

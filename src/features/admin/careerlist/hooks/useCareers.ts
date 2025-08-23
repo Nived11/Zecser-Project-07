@@ -8,6 +8,7 @@ export const useCareers = (page = 1, search = "", status = "All") => {
   const [isLoading, setIsLoading] = useState(true);
   const [nextPage, setNextPage] = useState<string | null>(null);
   const [prevPage, setPrevPage] = useState<string | null>(null);
+  const [isError, setisError] = useState<string | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -42,9 +43,9 @@ export const useCareers = (page = 1, search = "", status = "All") => {
         setPrevPage(response.data.previous);
       } catch (err) {
         if (err instanceof Error) {
-          console.error(err.message);
+          setisError(err.message);
         } else {
-          console.error("Error fetching careers");
+          setisError("careers not found");
         }
         setCareers([]);
       } finally {
@@ -55,5 +56,5 @@ export const useCareers = (page = 1, search = "", status = "All") => {
     fetchCareers();
   }, [page, search, status]);
 
-  return { careers, isLoading, nextPage, prevPage };
+  return { careers, isLoading, nextPage, prevPage,  isError};
 };

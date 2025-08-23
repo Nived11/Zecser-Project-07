@@ -53,7 +53,7 @@ export const useVaccancy = () => {
     try {
       const fd = buildFormData(formData);
       const res = await api.patch(`/jobs/${id}/`, fd,)
-      // toast.success(res.data.message || "Job vacancy updated");
+      toast.success(res.data.message || "Job vacancy updated");
       return res.data;
       
     } catch (e) {
