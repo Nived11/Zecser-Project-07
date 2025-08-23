@@ -12,12 +12,14 @@ export const useDeleteNews = () => {
     try {
        const res = await api.delete(`/news/${id}/`);
 
-       toast.success(res.data.message || "News deleted successfully.");
-    
+       toast.success(res.data.message || "News deleted successfully");
+      return true;
     } catch (err) {
-      console.error(err);
-
-      setError("Failed to delete news.");
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Failed to delete news. Please try again.");
+      } return false;
     } finally {
       setIsDeleting(false);
     }

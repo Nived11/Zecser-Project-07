@@ -35,10 +35,14 @@ const NewLists = () => {
 
   const handleDeleteConfirm = async () => {
     if (!deleteId) return;
-    await deleteNews(deleteId);
-    setDeleteId(null);
-    console.log("ref");
-    refetch(currentPage);
+  const success = await deleteNews(deleteId);
+
+  if (success) {
+    setTimeout(() => {
+      setDeleteId(null);
+      refetch(currentPage);
+    }, 500);
+  }
   };
 
   if (newsError) {
@@ -71,9 +75,6 @@ const NewLists = () => {
           ))
         ) : (
           <p className="text-center mt-6 text-gray-600">No news found.</p>
-        )}
-        {newsError && (
-          <p>Failed to load news. Please try again.</p>
         )}
       </div>
 

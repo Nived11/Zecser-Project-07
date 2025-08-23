@@ -34,7 +34,7 @@ export const useUpdateNews = () => {
       if (data.file) formData.append("image", data.file);
 
       const res = await api.post("/news/", formData);
-
+      
       toast.success(res.data.message || "News Added successfully.");
       return {
         ...res.data,
@@ -43,6 +43,7 @@ export const useUpdateNews = () => {
       } as NewsType;
     } catch (err) {
       setError("Failed to create news.");
+      return null; 
     } finally {
       setIsCreating(false);
     }
@@ -52,7 +53,7 @@ export const useUpdateNews = () => {
     const result = NewsSchema.omit({ image_url: true }).safeParse(data);
     if (!result.success) {
       setError(result.error.issues[0].message);
-      return;
+     return null; 
     }
 
     try {
@@ -78,9 +79,10 @@ export const useUpdateNews = () => {
       }
       else {
         setError("Failed to update news.");
-        console.error("Update error:", err);
       }
-    } finally {
+         return null;
+    }
+     finally {
       setIsUpdating(false);
     }
   };

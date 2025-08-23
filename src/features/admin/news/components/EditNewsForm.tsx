@@ -71,12 +71,12 @@ const EditNewsForm = ({ news, onSave }: Props) => {
       };
 
       if (news) {
-        await updateNews(news.id, payload);
+      const updated = await updateNews(news.id, payload);
+      if (updated) onSave(); 
        
-        onSave();
-      } else {
-        const created = await createNews(payload);
-        if (created) onSave();
+      }  else {
+      const created = await createNews(payload);
+      if (created) onSave();
       }
     } catch (err) {
       console.error("Failed to submit", err);
