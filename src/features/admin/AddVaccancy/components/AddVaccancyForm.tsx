@@ -49,7 +49,7 @@ export default function AddVaccancyForm({
     if (initialData) {
       setFormData(initialData);
     }
-  }, [initialData]);
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -64,7 +64,6 @@ export default function AddVaccancyForm({
     e.preventDefault();
 
     if (isEditMode && onSubmit) {
-      window.scrollTo(0, 0); 
       await onSubmit(formData); 
     } else {
       await addVaccancy(formData);
